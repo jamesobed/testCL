@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reward your teacher</title>
+    <style>
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+    <form id="paymentForm">    
+          <button type="submit" onclick="payWithPaystack()"> Pay Now </button>      
+      <script src="https://js.paystack.co/v1/inline.js"></script>
+      <script>
+        const paymentForm = document.getElementById('paymentForm');
+        paymentForm.addEventListener("submit", payWithPaystack, false);
+        function payWithPaystack(e) {
+        e.preventDefault();
+
+        let handler = PaystackPop.setup({
+            key: 'pk_test_43379ad7d24ddcb06b2a7fb95bb2effb8d70572b', 
+            email: "akindeleapex@gmail.com",
+            amount : 50000,
+            ref: 'Belrald-PYK-11544373', 
+            onClose: function(){
+            alert('Window closed.');
+            },
+            callback: function(response){
+            let message = 'Payment complete! Reference: ' + response.reference;
+            alert(message);
+            }
+        });
+
+        handler.openIframe();
+}
+      
+      </script>
+    
+</body>
+</html>

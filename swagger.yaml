@@ -1,0 +1,663 @@
+openapi: 3.0.0
+info:
+  title: CargoLand
+  description: In order to create an order for the shipment of goods at your convenience and also track order and create tickets, Cargo Land provides you this platform, you must first initiate the process from the platform by registering.
+  contact:
+    name: hr.admin@cargoLand.org
+    email: cargoland@gmail.com
+  version: '1.0'
+servers:
+  - url: https://cargoLand-org-api.onrender.com
+    description: This is the production server
+    variables: {}
+  - url: http://localhost:4300
+    description: 'This is the localhost development server'
+    variables: {}
+paths:
+  /order/create-order:
+    post:
+      tags:
+        - User
+      summary: CreatePost
+      description: 'A logged-in user can create a order with this endpoint'
+      operationId: CreatePost
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/createOrder'
+                - example:
+                    orderTitle: 90oiu898tg5
+                    orderBody: put your ticket here
+                    orderImage: 'Ayoola'
+                    pickUpLocation: Ibikunle
+                    dropOffLocation: Ibikunle
+                    receipentNumber: Ibikunle
+                    contacttNumber: Ibikunle
+            example:
+              orderBody: 'ticket body here'
+              orderTitle: 90oiu898tg5
+              orderImage: 'Ayoola'
+              pickUpLocation: Ibikunle
+              dropOffLocation: Ibikunle
+              receipentNumber: Ibikunle
+              contacttNumber: Ibikunle
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /ticket/create-ticket:
+    post:
+      tags:
+        - User
+      summary: ticket
+      description: ticket
+      operationId: ticket
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/ticket'
+                - example:
+                    orderID: 90oiu898tg5
+                    ticketBody: put your ticket here
+                    firstName: 'Ayoola'
+                    lastName: Ibikunle
+            example:
+              ticketBody: 'ticket body here'
+              orderID: 90oiu898tg5
+              firstName: 'Ayoola'
+              lastName: Ibikunle
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /cargoLand/suscribe:
+    post:
+      tags:
+        - User
+      summary: suscribe
+      description: suscribe
+      operationId: suscribe
+      parameters: []
+      requestBody:
+        description: 'Suscribe to cargoLand newsletter'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/suscribe'
+                - example:
+                    email: test@domain.com
+            example:
+              email: test@domain.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security: []
+  /user/update:
+    patch:
+      tags:
+        - User
+      summary: updateprofile
+      description: This endpoint allows you to update a logged-in user profile
+      operationId: updateprofile
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/updateprofilerequest'
+                - example:
+                    name: Tunwase Chukwudi
+                    address: Lekki Lagos
+                    phoneNumber: '08073059173'
+                    avatar: https://i.pinimg.com/originals/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg
+                    role: admin
+            example:
+              name: Tunwase Chukwudi
+              address: Lekki Lagos
+              phoneNumber: '08073059173'
+              avatar: https://i.pinimg.com/originals/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg
+              role: admin
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /order/get-single-order/{id}:
+    get:
+      tags:
+        - User
+      summary: OrderAndtickets
+      description: Get a single order and all it's ticket. user must be logged-in user
+      operationId: OrderAndtickets
+      parameters:
+        - name: id
+          in: path
+          description: The Order ID
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /user/single-user/{id}:
+    get:
+      tags:
+        - User
+      summary: SingleUser
+      description: This returns details of a single user
+      operationId: SingleUser
+      parameters:
+        - name: id
+          in: path
+          description: The user ID
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /user/reset-password:
+    patch:
+      tags:
+        - Auth
+      summary: ForgotPasswordReset
+      description: After the user's email has been verified to be valid, the user can then reset his or her password
+      operationId: ForgotPasswordReset
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/restepasswordrequest'
+                - example:
+                    token: d55e5e01-7b41-440f-961c-a16ab779e00a
+                    password: mypassword
+                    confirmPassword: mypassword
+            example:
+              token: d55e5e01-7b41-440f-961c-a16ab779e00a
+              password: mypassword
+              confirmPassword: mypassword
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security: []
+  /user/register:
+    post:
+      tags:
+        - Auth
+      summary: RegisterUser
+      description: This is the signup endpoint, which allows you to register a user
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/registeruserrequest'
+                - example:
+                    name: John
+                    address: Doe
+                    phoneNumber: '09000000000'
+                    email: test@test.com
+                    userName: user1
+                    password: '1234'
+                    confirmPassword: '1234'
+            example:
+              name: John
+              address: Doyin
+              phoneNumber: '09000000000'
+              email: test@test.com
+              userName: user1
+              password: '1234'
+              confirmPassword: '1234'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security: []
+  /user/login:
+    post:
+      tags:
+        - Auth
+      summary: LoginUser
+      description: You can log in either by using a registered email or a registered phoneNumber with a password
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/loginuserrequest'
+                - example:
+                    email: test@test.com
+                    password: '1234'
+            example:
+              email: test@test.com
+              password: '1234'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security: []
+  /user/verify/{token}:
+    get:
+      tags:
+        - Auth
+      summary: VerifyEmail
+      description: This endpoint verifies an unverified email, to get the token for verification you can go through the resend verification token endpoint or upon registration of the user, after which the user would be redirected to the login page
+      operationId: VerifyEmail
+      parameters:
+        - name: token
+          in: path
+          description: The user ID
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security: []
+  /user/forgot-password:
+    post:
+      tags:
+        - Auth
+      summary: ForgotPasswordToken
+      description: This endpoint generates a token that is sent to the email provided. Then the token can be used to reset the password via the reset password endpoint
+      operationId: ForgotPasswordToken
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/forgetpasswordrequest'
+                - example:
+                    email: test@test.com
+            example:
+              email: test@test.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  /user/resend-verification:
+    patch:
+      tags:
+        - Auth
+      summary: ResendVerificationToken
+      description: You can resend email verification token with this endpoint
+      operationId: ResendVerificationToken
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/forgetpasswordrequest'
+                - example:
+                    email: example@hostname.com
+            example:
+              email: example@hostname.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security: []
+  /user/all-users:
+    get:
+      tags:
+        - Admin
+      summary: AllUsers
+      description: This endpoint returns all registered users, accessed by logged-in admin only
+      operationId: AllUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /order/get-all-order:
+    get:
+      tags:
+        - User
+      summary: All order
+      description: This endpoint returns all created order and tickets, accessed by logged-in users only to view tickets
+      operationId: All order
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+  /user/deleteUser/{userId}:
+    delete:
+      tags:
+        - Admin
+      summary: DeleteUser
+      description: This endpoint deletes a registered user from the system database, accessed only by logged-in admin
+      operationId: DeleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: The user ID
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    createticket:
+      title: createticket
+      required:
+        - ticketBody
+        - userId
+        - orderID
+        - firstName
+        - lastName
+      type: object
+      properties:
+        ticketBody:
+          type: string
+        userId:
+          type: string
+        orderID:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      example:
+        ticketBody: 'I think this order is very important'
+        userId: 'hfjhf0986jfbd'
+        orderID: 'oiu977y6gge5'
+        firstName: Wale
+        lastName: 'Bayo'
+
+    restepasswordrequest:
+      title: restepasswordrequest
+      required:
+        - token
+        - password
+        - confirmPassword
+      type: object
+      properties:
+        token:
+          type: string
+        password:
+          type: string
+        confirmPassword:
+          type: string
+      example:
+        token: d55e5e01-7b41-440f-961c-a16ab779e00a
+        password: mypassword
+        confirmPassword: mypassword
+    registeruserrequest:
+      title: registeruserrequest
+      required:
+        - name
+        - address
+        - phoneNumber
+        - email
+        - password
+        - confirmPassword
+        - userName
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        password:
+          type: string
+        confirmPassword:
+          type: string
+        userName:
+          type: string
+      example:
+        name: Adeyinka
+        address: Doctor
+        phoneNumber: '07000000000'
+        email: test@test.com
+        password: '1234'
+        confirmPassword: '1234'
+        userName: 'user1'
+    loginuserrequest:
+      title: loginuserrequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: test@test.com
+        password: '1234'
+    forgetpasswordrequest:
+      title: forgetpasswordrequest
+      required:
+        - email
+      type: object
+      properties:
+        email:
+          type: string
+      example:
+        email: test@test.com
+    updateprofilerequest:
+      title: updateprofilerequest
+      required:
+        - name
+        - address
+        - phoneNumber
+        - avatar
+        - role
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        phoneNumber:
+          type: string
+        avatar:
+          type: string
+        role:
+          type: string
+      example:
+        name: Chiroma Musa
+        address: Egbeda Lagos
+        phoneNumber: '07011111111'
+        avatar: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7nG8OgXmMOXXiwbNOc-PPXUcilcIhCkS9BQ&usqp=CAU
+        role: admin
+    createOrder:
+      title: createOrder
+      required:
+        - orderTitle
+        - orderBody
+        - orderImage
+        - pickUpLocation
+        - dropOffLocation
+        - receipentNumber
+        - contacttNumber
+      type: object
+      properties:
+        orderTitle:
+          type: string
+        orderBody:
+          type: string
+        orderImage:
+          type: string
+        dropOffLocation:
+          type: string
+        pickUpLocation:
+          type: string
+        receipentNumber:
+          type: string
+        contacttNumber:
+          type: string
+      example:
+        orderTitle: order One
+        orderBody: 'order body text'
+        orderImage: 'https://image.png'
+        contacttNumber: '+47800000000'
+        receipentNumber: '+234800000000'
+        pickUpLocation: '+47800000000'
+        dropOffLocation: '+234800000000'
+    AdminRegisterRequest:
+      title: AdminRegisterRequest
+      required:
+        - name
+        - address
+        - email
+        - phoneNumber
+        - password
+        - confirmPassword
+        - role
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        confirmPassword:
+          type: string
+        role:
+          type: string
+      example:
+        name: Olamide
+        address: Web Developer
+        phoneNumber: '09000000000'
+        email: test@test.com
+
+        confirmPassword: '1234'
+        role: admin
+
+    suscribe:
+      title: suscribe
+      required:
+        - email
+
+      type: object
+      properties:
+        email:
+          type: string
+
+      example:
+        email: test@domain.com
+
+    ResendVerificationEmailRequest:
+      title: ResendVerificationEmailRequest
+      required:
+        - email
+      type: object
+      properties:
+        email:
+          type: string
+      example:
+        email: test@test.com
+
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Auth
+    description: 'User interaction create token'
+  - name: User
+    description: 'Token needed in this section'
+  - name: Admin
+    description: ''

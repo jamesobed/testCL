@@ -1,0 +1,80 @@
+<DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Receive Payment</title>
+      <style>
+        body {
+          height: 900px;
+          width: 100%;
+          top: 0px;
+          border-radius: 0px;
+        }
+        .container {
+          height: 286px;
+          width: 90%;
+          left: 5%;
+          top: 10%;
+          border-radius: 8px;
+        }
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #4caf50;
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 16px;
+          cursor: pointer;
+          width: 70%;
+          height: 48px;
+          /* left: 10%; */
+          top: 50%;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <form>
+          <button type="button" onClick="makePayment()">Pay Now</button>
+        </form>
+
+        <script src="https://checkout.flutterwave.com/v3.js"></script>
+        <script>
+          function makePayment() {
+            FlutterwaveCheckout({
+              // public_key: 'FLWPUBK_TEST-661f207a8c29b8711c34bbfa944b5497-X',
+              public_key: 'FLWPUBK_TEST-f564e56d0a69d492987b95ffe668e009-X',
+              tx_ref: 'Belrald-PYK-74095247',
+              amount: 5000,
+              country: 'NG',
+              currency: 'NGN',
+              payment_options: 'card',
+
+              redirect_url: 'http://localhost:4300/paystack/verify',
+
+              customer: {
+                email: 'test@gmail.com',
+                // billName: "Acceptance fees",
+                name: 'Shipment fees',
+              },
+              callback: function (data) {
+                console.log(data);
+              },
+              onclose: function () {},
+              customizations: {
+                title: 'CargoLand',
+                description: 'CargoLand Payment',
+                logo: 'https://cargoland.netlify.app/assets/logo-197784e7.png',
+              },
+            });
+          }
+        </script>
+      </div>
+    </body>
+  </html></DOCTYPE
+>
